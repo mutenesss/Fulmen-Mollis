@@ -1,46 +1,49 @@
-# Virus on a Network
+# Fulmen Mollis
 
-## Summary
+## Virus on a Network
 
-This model is based on the NetLogo model "Virus on Network".
+Essa é uma versão editada do modelo "Virus on Network" presente nos exemplos do framework Mesa.
 
-For more information about this model, read the NetLogo's web page: http://ccl.northwestern.edu/netlogo/models/VirusonaNetwork.
+Mais informações sobre a base deste modelo podem ser encontradas em: https://github.com/projectmesa/mesa-examples/tree/main/examples/Virus_on_Network
 
-JavaScript library used in this example to render the network: [d3.js](https://d3js.org/).
+Para mais informações sobre o framework Mesa, ler a documentação disponivel no site https://mesa.readthedocs.io/en/stable/
 
-## Installation
+## Dependências e Execução
 
-To install the dependencies use pip and the requirements.txt in this directory. e.g.
+Para executar este modelo, primeiro é necessário instalar as dependências necessárias, que se encontram no arquivo texto requirements.txt
+O comando para instalar as dependências é o seguinte
 
 ```
     $ pip install -r requirements.txt
 ```
 
-## How to Run
+O modelo pode ser executado das seguintes formas:
+Estando dentro deste diretório, executar o comando
+...
+    $ python3 run.py
+...
 
-To run the model interactively, run ``mesa runserver`` in this directory. e.g.
+ou
 
 ```
     $ mesa runserver
 ```
 
-Then open your browser to [http://127.0.0.1:8521/](http://127.0.0.1:8521/) and press Reset, then Run.
+No caso do comando `mesa runserver`, após a execução do comando é necessário abrir o seu navegador, ir para o link[http://127.0.0.1:8521/](http://127.0.0.1:8521/), apertar no botão Reset e então no botão Run.
 
-## Files
+## Arquivos
 
-* ``run.py``: Launches a model visualization server.
-* ``model.py``: Contains the agent class, and the overall model class.
-* ``server.py``: Defines classes for visualizing the model (network layout) in the browser via Mesa's modular server, and instantiates a visualization server.
+* ``run.py``: Executa o servidor para visualização do modelo.
+* ``model.py``: Contêm a classe agente e as classe do modelo.
+* ``server.py``: Define as classes para visualização da rede do modelo e instancia um servidor de visualização utilizando o servidor modular Mesa.
 
-## Further Reading
+## Diferenças Para o Modelo Base
 
-The full tutorial describing how the model is built can be found at:
-https://mesa.readthedocs.io/en/latest/tutorials/intro_tutorial.html
+Neste modelo, há a adição de uma condição de parada do modelo, que ocorre no momento em que não há mais agentes contaminados no modelo.
 
+A adição de uma nova variável de controle, denominada `Virus Mortality Rate`, em conjunto com seu ajustador ou slider.
+Esta nova variável adiciona uma chance de um agente infectado no modelo morrer, subtraíndo a quantidade de infectados no modelo e limitando a quantidade de possíveis vizinhos a serem contaminados. Seu funcionamento pode ser comparado ao dos agentes resistentes, que não podem infectar seus vizinhos ou serem infectados.
 
-[Stonedahl, F. and Wilensky, U. (2008). NetLogo Virus on a Network model](http://ccl.northwestern.edu/netlogo/models/VirusonaNetwork).
-Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
+Visando observar as consequências dessa nova variável, foi adicionado um gráfico que obtem a quantidade de agentes vivos e agentes mortos no modelo.
 
-
-[Wilensky, U. (1999). NetLogo](http://ccl.northwestern.edu/netlogo/)
-Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
+Para maiores informações sobre o modelo e suas adições, ler as informações descritas em https://www.overleaf.com/read/hmggjqxrmdjc
