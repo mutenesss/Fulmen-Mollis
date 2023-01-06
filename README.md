@@ -40,6 +40,9 @@ No caso do comando `mesa runserver`, após a execução do comando é necessári
 
 ## Diferenças Para o Modelo Base
 
+As alterações neste modelo foram feitas visando a seguinte hipótese causal - `Quanto maior a taxa de mortalidade
+de um vírus, menor será a sua transmissibilidade em um grupo.`
+
 Neste modelo, há a adição de uma condição de parada do modelo, que ocorre no momento em que não há mais agentes contaminados no modelo.
 
 A adição de uma nova variável de controle, denominada `Virus Mortality Rate`, em conjunto com seu ajustador ou slider.
