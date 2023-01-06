@@ -19,6 +19,7 @@ O comando para instalar as dependências é o seguinte
 
 O modelo pode ser executado das seguintes formas:
 Estando dentro deste diretório, executar o comando
+
 ...
     $ python3 run.py
 ...
