@@ -73,12 +73,12 @@ def get_resistant_susceptible_ratio(model):
         ratio_text, infected_text
     )
 
-def get_dead_alive_ratio(model):
+def get_cmr(model):
     ratio = model.live_agents()
-    ratio_text = "&infin;" if ratio is math.inf else f"{ratio:.3f}"
+    ratio_text = "&infin;" if ratio is math.inf else f"{ratio:.2f}"
     dead_text = str(number_dead(model))
 
-    return "Live/Dead Ratio: {}<br>Number of Dead People: {}".format(
+    return "CMR - Crude Mortality Rate: {}<br>Number of Dead People: {}".format(
         ratio_text, dead_text
     )
 
@@ -135,19 +135,20 @@ model_params = {
         description="Probability that a recovered agent will become "
         "resistant to this virus in the future",
     ),
+
     "mortality_chance": mesa.visualization.Slider(
-        "Virus Mortality Rate",
-        0.01,
+        "Virus Mortality Chance",
+        0.1,
         0.0,
         1.0,
-        0.01,
+        0.05,
         description="Probability that a agent will die from the virus",
     ),
 }
 
 server = mesa.visualization.ModularServer(
     VirusOnNetwork,
-    [network, get_resistant_susceptible_ratio, chart, get_dead_alive_ratio, chart2],
+    [network, get_resistant_susceptible_ratio, chart, get_cmr, chart2],
     "Virus Model",
     model_params,
 )

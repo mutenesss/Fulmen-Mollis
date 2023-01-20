@@ -47,6 +47,7 @@ class VirusOnNetwork(mesa.Model):
         recovery_chance=0.3,
         gain_resistance_chance=0.5,
         mortality_chance=0.1,
+        cmr = 0,
     ):
 
         self.num_nodes = num_nodes
@@ -62,6 +63,7 @@ class VirusOnNetwork(mesa.Model):
         self.recovery_chance = recovery_chance
         self.gain_resistance_chance = gain_resistance_chance
         self.mortality_chance = mortality_chance
+        self.cmr = self.live_agents()
 
         self.datacollector = mesa.DataCollector(
             {
@@ -70,6 +72,7 @@ class VirusOnNetwork(mesa.Model):
                 "Resistant": number_resistant,
                 "Dead": number_dead,
                 "Alive": number_alive,
+                "CMR": self.live_agents,
             }
         )
 
@@ -107,8 +110,7 @@ class VirusOnNetwork(mesa.Model):
     
     def live_agents(self):
         try:
-            return (number_state(self, State.RESISTANT) + number_state(
-                self, State.SUSCEPTIBLE)) / self.num_nodes
+            return number_state(self, State.DEAD) / self.num_nodes
         except ZeroDivisionError:
             return math.inf
 
@@ -182,10 +184,37 @@ class VirusAgent(mesa.Agent):
                 self.try_remove_infection()
 
     def step(self):
-        if number_infected(self.model) == 0:
-            self.model.running = False
-        else:
-            if self.state is not State.DEAD:
-                if self.state is State.INFECTED:
-                    self.try_die()
-                self.try_check_situation()
+        # if number_infected(self.model) == 0:
+        #     self.model.running = False
+        # else:
+        if self.state is not State.DEAD:
+            if self.state is State.INFECTED:
+                self.try_die()
+            self.try_check_situation()
+
+def experimento():
+    import matplotlib.pyplot as plt
+    import numpy as np
+    import pandas as pd
+
+    # Hipotese - 
+    # Quanto maior a probabilidade de morte, menor sua transmissibilidade em um grupo
+    # Quanto maior a probabilidade de morte, maior a taxa de mortalidade bruta em um grupo
+
+    params = {
+        "num_nodes": 50,
+        "avg_node_degree": 3,
+        "initial_outbreak_size": 5,
+        "virus_spread_chance": 0.4,
+        "virus_check_frequency": 0.4,
+        "recovery_chance": 0.3,
+        "gain_resistance_chance": 0.3,
+        "mortality_chance": np.arange(0.1, 1.1, 0.1),
+    }
+
+    results = mesa.batch_run(VirusOnNetwork, params, iterations=1000, max_steps=100)
+
+    results_df = pd.DataFrame(results)
+    results_df.to_csv("expdata.csv")
+
+experimento()
